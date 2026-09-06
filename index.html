@@ -3,1093 +3,1508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Escrivão de Polícia Civil (Bahia)</title>
+    <title>Dashboard Estudo - Concurso Escrivão Bahia 2026</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
-            color: #333;
         }
-
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
-        }
-
-        header {
             background: white;
-            padding: 30px 40px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 28px;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        header p {
-            color: #718096;
-            font-size: 14px;
-        }
-
-        .progress-section {
-            background: white;
-            padding: 30px 40px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .progress-header span {
-            font-size: 14px;
-            color: #718096;
-            font-weight: 500;
-        }
-
-        .progress-header .percentage {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: #e2e8f0;
-            border-radius: 6px;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
-            margin-bottom: 10px;
         }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .progress-info {
-            font-size: 13px;
-            color: #718096;
-        }
-
-        .weeks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .week-btn {
-            padding: 12px 16px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: #2d3748;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .week-btn:hover {
-            border-color: #667eea;
-            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.15);
-        }
-
-        .week-btn.active {
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-color: #667eea;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            padding: 40px 20px;
+            text-align: center;
         }
-
-        .content-area {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
-
-        .content-area h2 {
-            font-size: 20px;
-            color: #2d3748;
-            margin-bottom: 10px;
-        }
-
-        .content-area .subtitle {
-            color: #718096;
-            font-size: 13px;
-            margin-bottom: 25px;
-        }
-
-        .week-progress {
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { font-size: 14px; opacity: 0.9; }
+        .tabs {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #f7fafc;
-            border-radius: 8px;
+            overflow-x: auto;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
         }
-
-        .week-progress-bar {
+        .tab-btn {
             flex: 1;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .week-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .week-progress-text {
-            font-size: 13px;
-            color: #718096;
-            min-width: 60px;
-            text-align: right;
-        }
-
-        .day-card {
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            overflow: hidden;
-        }
-
-        .day-header {
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .day-header:hover {
-            background: linear-gradient(135deg, #5a6fd8 0%, #6a3b95 100%);
-        }
-
-        .day-header .toggle {
-            font-size: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .day-header.active .toggle {
-            transform: rotate(180deg);
-        }
-
-        .day-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .day-content.active {
-            max-height: 3000px;
-        }
-
-        .day-body {
-            padding: 20px;
-        }
-
-        .activity {
-            margin-bottom: 20px;
             padding: 15px;
-            background: white;
-            border-left: 4px solid #667eea;
-            border-radius: 4px;
-        }
-
-        .activity-title {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 13px;
             font-weight: 500;
-            color: #2d3748;
-            margin-bottom: 8px;
-            font-size: 14px;
+            color: #666;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            min-width: 100px;
         }
-
-        .activity-time {
-            font-size: 12px;
-            color: #718096;
-            margin-bottom: 10px;
-        }
-
-        .activity-content {
-            font-size: 13px;
-            color: #4a5568;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .links-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .link-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-
-        .link-item a {
+        .tab-btn:hover { background: #e9ecef; }
+        .tab-btn.active {
             color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
+            border-bottom-color: #667eea;
+            background: white;
         }
-
-        .link-item a:hover {
-            color: #764ba2;
-            text-decoration: underline;
+        .content-area {
+            padding: 30px 20px;
+            min-height: 600px;
         }
-
-        .link-icon {
-            font-size: 12px;
+        .semana { display: none; }
+        .semana.active { display: block; }
+        .semana-header {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
         }
-
-        .checkbox-wrapper {
+        .semana-header h2 { color: #333; margin-bottom: 5px; font-size: 20px; }
+        .semana-header p { color: #666; font-size: 14px; }
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .tabs-content {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #e2e8f0;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e9ecef;
         }
-
-        .checkbox-wrapper input[type="checkbox"] {
+        .tabs-content button {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 13px;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .tabs-content button:hover { color: #667eea; }
+        .tabs-content button.active-tab {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .tab-pane { display: none; }
+        .tab-pane.active-pane { display: block; }
+        .cronograma-dia {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        .cronograma-dia h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .cronograma-dia .tema {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        .atividade {
+            background: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            border-left: 3px solid #764ba2;
+        }
+        .atividade-nome {
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .atividade-detalhes {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        a.link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 11px;
+            transition: all 0.3s;
+        }
+        a.link-btn:hover { background: #764ba2; transform: translateY(-2px); }
+        .topics-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .topic {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 3px solid #667eea;
+        }
+        .topic:hover { background: #e9ecef; transform: translateX(5px); }
+        .topic input[type="checkbox"] {
+            margin-top: 3px;
             width: 18px;
             height: 18px;
             cursor: pointer;
             accent-color: #667eea;
         }
-
-        .checkbox-wrapper label {
-            font-size: 13px;
-            color: #718096;
-            cursor: pointer;
-        }
-
-        .topics-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .topic-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 8px;
-            border-left: 4px solid #e2e8f0;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .topic-item:hover {
-            background: #edf2f7;
-            border-left-color: #667eea;
-        }
-
-        .topic-item input[type="checkbox"] {
-            display: none;
-        }
-
-        .topic-item input[type="checkbox"]:checked + label {
-            color: #667eea;
-            font-weight: 500;
-            text-decoration: line-through;
-        }
-
-        .topic-item input[type="checkbox"]:checked ~ .check-mark {
-            background: #667eea;
-            color: white;
-        }
-
-        .topic-item label {
+        .topic.completed { opacity: 0.6; }
+        .topic.completed label { text-decoration: line-through; }
+        .topic label {
             flex: 1;
             cursor: pointer;
-            font-size: 14px;
-            color: #2d3748;
-            display: flex;
-            align-items: center;
-        }
-
-        .check-mark {
-            width: 20px;
-            height: 20px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .note-box {
-            background: #edf2f7;
-            border-left: 4px solid #667eea;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-top: 30px;
             font-size: 13px;
-            color: #4a5568;
-            line-height: 1.6;
+            color: #333;
         }
-
-        .note-box strong {
-            color: #2d3748;
-        }
-
-        footer {
-            text-align: center;
-            color: white;
-            font-size: 12px;
+        .footer {
+            background: #f8f9fa;
             padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #e9ecef;
         }
-
-        .stats-grid {
+        .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
-            margin-top: 20px;
-        }
-
-        .stat-card {
-            background: #f7fafc;
-            padding: 15px 20px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-
-        .stat-card .number {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-
-        .stat-card .label {
-            font-size: 12px;
-            color: #718096;
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 10px;
             margin-bottom: 25px;
-            border-bottom: 2px solid #e2e8f0;
-            flex-wrap: wrap;
         }
-
-        .tab-btn {
-            padding: 12px 20px;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: #718096;
-            transition: all 0.3s;
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border-left: 3px solid #667eea;
         }
-
-        .tab-btn.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-        }
-
-        .tab-btn:hover {
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
             color: #667eea;
         }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 20px;
-            }
-
-            header h1 {
-                font-size: 20px;
-            }
-
-            .content-area {
-                padding: 20px;
-            }
-
-            .weeks-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            }
-
-            .day-header {
-                font-size: 13px;
-            }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>📚 Escrivão de Polícia Civil - Bahia</h1>
-            <p>Dashboard de Estudo | Concurso 2026 | Prova: 06/12/2026</p>
-        </header>
+        <div class="header">
+            <h1>📚 Dashboard Concurso Escrivão - Bahia 2026</h1>
+            <p>Plano de Estudo Completo | 12 Semanas | 2h/dia | 100% Gratuito</p>
+        </div>
 
-        <div class="progress-section">
-            <div class="progress-header">
-                <span>Progresso Geral</span>
-                <span class="percentage" id="overall-percent">0%</span>
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalTopicos">0</div>
+                <div class="stat-label">Tópicos Total</div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="overall-progress"></div>
+            <div class="stat-card">
+                <div class="stat-number" id="concluidosCount">0</div>
+                <div class="stat-label">Concluídos</div>
             </div>
-            <div class="progress-info" id="progress-info">0 de 144 tópicos concluídos</div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="number" id="completed-stat">0</div>
-                    <div class="label">Concluídos</div>
+            <div class="stat-card">
+                <div class="stat-number" id="percentualProgress">0%</div>
+                <div class="stat-label">Progresso Geral</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="diasRestantes">0</div>
+                <div class="stat-label">Dias até Prova</div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text">
+            <span id="progressText">0/0 tópicos concluídos</span>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showSemana(0)">📝 Sem 1-2<br>Port + RL</button>
+            <button class="tab-btn" onclick="showSemana(1)">⚖️ Sem 3-4<br>Dir. Penal</button>
+            <button class="tab-btn" onclick="showSemana(2)">📋 Sem 5-6<br>Dir. Proc</button>
+            <button class="tab-btn" onclick="showSemana(3)">🔨 Sem 7<br>Leg. Extra</button>
+            <button class="tab-btn" onclick="showSemana(4)">🏛️ Sem 8<br>Admin+Const</button>
+            <button class="tab-btn" onclick="showSemana(5)">📂 Sem 9<br>Arq + Estat</button>
+            <button class="tab-btn" onclick="showSemana(6)">🔬 Sem 10<br>Med Legal</button>
+            <button class="tab-btn" onclick="showSemana(7)">💻 Sem 11<br>Info + Igualdade</button>
+            <button class="tab-btn" onclick="showSemana(8)">🎯 Sem 12<br>Revisão</button>
+        </div>
+
+        <div class="content-area">
+            <!-- SEMANA 1-2 -->
+            <div class="semana active" id="semana-0">
+                <div class="semana-header">
+                    <h2>📝 Semana 1-2: Fundação Jurídica</h2>
+                    <p>09/09 - 22/09 | Português + Raciocínio Lógico</p>
                 </div>
-                <div class="stat-card">
-                    <div class="number" id="remaining-stat">144</div>
-                    <div class="label">Restantes</div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-0')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-0')">✓ Tópicos</button>
                 </div>
-                <div class="stat-card">
-                    <div class="number" id="weeks-completed">0/9</div>
-                    <div class="label">Semanas</div>
+
+                <div class="tab-pane active-pane" id="cron-0">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (09/09) - Português: Compreensão e Interpretação</h4>
+                        <div class="tema">Compreensão textual, análise crítica</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaulas YouTube</div>
+                            <div class="atividade-detalhes">Técnicas de linguagem jurídica, compreensão de textos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=NPYhC8b5k_4" target="_blank">🎥 Técnicas Linguagem</a>
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=K-z7ADHR6Sc" target="_blank">🎥 Interpretação Textual</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Manual de Redação Oficial</div>
+                            <div class="atividade-detalhes">Leitura págs 1-20, conceitos principais</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.gov.br/pt-br/servicos/consultar-o-manual-de-redacao-da-presidencia-da-republica" target="_blank">📘 Manual Gov.br</a>
+                                <a class="link-btn" href="https://midiasstoragesec.blob.core.windows.net/001/2024/04/desbc_manual_redacao_ed_1_2024_966bcd74e8482da1569c6b839996c0dd.pdf" target="_blank">📘 PDF 2024</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (10/09) - Raciocínio Lógico: Lógica Proposicional</h4>
+                        <div class="tema">Proposições, conectivos lógicos</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaulas Guilherme Neves</div>
+                            <div class="atividade-detalhes">Lógica proposicional, conectivos, tabelas verdade</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=cwk84JcONaU" target="_blank">🎥 Lógica Proposicional</a>
+                                <a class="link-btn" href="https://www.youtube.com/playlist?list=PLKa4ksSoV33K-93BRUX-Rn3JtjTxCVtO0" target="_blank">🎥 Playlist Completa</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Exercícios Q7Lab</div>
+                            <div class="atividade-detalhes">15-20 questões sobre lógica proposicional</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab SEM LIMITE</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (11/09) - Português: Semântica Jurídica</h4>
+                        <div class="tema">Significados de palavras, contexto jurídico</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Canal "Entendeu Direito"</div>
+                            <div class="atividade-detalhes">Semântica jurídica, palavras-chave</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/@entendeudireitoED" target="_blank">🎥 Entendeu Direito</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Resumo em Notion/Google Drive</div>
+                            <div class="atividade-detalhes">Compilar palavras-chave + significados</div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (12/09) - Raciocínio Lógico: Proporções e Conjuntos</h4>
+                        <div class="tema">Proporções, razões, conjuntos lógicos</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Minicurso Aula 01 Prof. Neves</div>
+                            <div class="atividade-detalhes">Proporções, frações, razões</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=G1o-CwQ_TO4" target="_blank">🎥 Minicurso Aula 1</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Q7Lab</div>
+                            <div class="atividade-detalhes">Proporções e conjuntos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (13/09) - Simulado Mini: Português + Raciocínio Lógico</h4>
+                        <div class="tema">Revisão integrada Semana 1</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Simulado 30 Questões</div>
+                            <div class="atividade-detalhes">15 Port + 15 RL | Marca tempo real</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Simulado Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Revisão e Correção</div>
+                            <div class="atividade-detalhes">Rever erros, assistir vídeos dos tópicos fracos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-0">
+                    <div class="topics-list" id="topics-list-0"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 3-4 -->
+            <div class="semana" id="semana-1">
+                <div class="semana-header">
+                    <h2>⚖️ Semana 3-4: Direito Penal Essencial</h2>
+                    <p>23/09 - 06/10 | Parte Geral (arts 1-107)</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-1')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-1')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-1">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (23/09) - Princípios e Conceitos</h4>
+                        <div class="tema">Princípios fundamentais, legalidade, anterioridade</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaulas AlfaCon</div>
+                            <div class="atividade-detalhes">Aula 1/2 - Princípios, conceito de crime</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=4LKecwQBCBg" target="_blank">🎥 AlfaCon Aula 1/2</a>
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=VgvFkFK1XOk" target="_blank">🎥 Prof. Renan Zero</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Código Penal arts 1-6</div>
+                            <div class="atividade-detalhes">Leitura e anotações: Lei penal, princípios</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www2.senado.leg.br/bdsf/bitstream/handle/id/608973/Codigo_penal_6ed.pdf?sequence=1&isAllowed=y" target="_blank">📘 PDF Senado</a>
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm" target="_blank">📖 Planalto HTML</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (24/09) - Aplicação da Lei Penal</h4>
+                        <div class="tema">Lei no tempo, lei no espaço, retroatividade</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula AlfaCon Aula 2/2</div>
+                            <div class="atividade-detalhes">Aplicação da lei penal no tempo e espaço</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=oBGBA3-IeTc" target="_blank">🎥 AlfaCon Aula 2/2</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Aplicação Lei</div>
+                            <div class="atividade-detalhes">Exercícios sobre lei penal no tempo/espaço</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (25/09) - Fato Típico</h4>
+                        <div class="tema">Elementos do fato típico, resultado, nexo causal</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Código Penal arts 13-20</div>
+                            <div class="atividade-detalhes">Leitura: resultado, nexo causal, tipicidade</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www2.senado.leg.br/bdsf/bitstream/handle/id/608973/Codigo_penal_6ed.pdf?sequence=1&isAllowed=y" target="_blank">📘 PDF CP</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula Simplificando DP</div>
+                            <div class="atividade-detalhes">Fato típico, concurso material, nexo causal</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=aMemSfS-e-U" target="_blank">🎥 Simplificando DP</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (26/09) - Ilicitude e Culpabilidade</h4>
+                        <div class="tema">Ilicitude, culpabilidade, imputabilidade</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Código Penal arts 21-28</div>
+                            <div class="atividade-detalhes">Causas de exclusão de ilicitude, culpabilidade</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm" target="_blank">📖 Planalto HTML</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Ilicitude/Culpabilidade</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (27/09) - Simulado Mini Direito Penal</h4>
+                        <div class="tema">Revisão integrada Parte Geral</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 30 Questões Direito Penal</div>
+                            <div class="atividade-detalhes">Prova simulada Semana 3-4</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Correção e Revisão</div>
+                            <div class="atividade-detalhes">Rever questões erradas, consolidar aprendizado</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-1">
+                    <div class="topics-list" id="topics-list-1"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 5-6 -->
+            <div class="semana" id="semana-2">
+                <div class="semana-header">
+                    <h2>📋 Semana 5-6: Direito Processual Penal ⭐</h2>
+                    <p>07/10 - 20/10 | CRÍTICO PARA PROVA</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-2')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-2')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-2">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (07/10) - CPP: Inquérito Policial</h4>
+                        <div class="tema">Conceito, instauração, características</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula AlfaCon CPP 1/2</div>
+                            <div class="atividade-detalhes">Origem, conceito, natureza jurídica</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=_9fy89J50Fs" target="_blank">🎥 AlfaCon CPP</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Código Processo Penal arts 4-28</div>
+                            <div class="atividade-detalhes">Inquérito policial - leitura anotada</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del3689compilado.htm" target="_blank">📖 CPP Planalto</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (08/10) - CPP: Ação Penal</h4>
+                        <div class="tema">Ação penal pública x privada, legitimação</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula PRF Processo Penal</div>
+                            <div class="atividade-detalhes">Ação penal, competência, jurisdição</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=0g6nSpNTw9Y" target="_blank">🎥 Alfacon PRF</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Ação Penal</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (09/10) - CPP: Prova Penal</h4>
+                        <div class="tema">Conceito, meios, sistemas, cadeia custódia</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Código Processo Penal arts 155-250</div>
+                            <div class="atividade-detalhes">Prova penal, testemunhas, perícia, documentos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del3689compilado.htm" target="_blank">📖 CPP</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula Prova Penal</div>
+                            <div class="atividade-detalhes">Sistemas de prova, meios de prova</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=_9fy89J50Fs" target="_blank">🎥 AlfaCon</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (10/10) - CPP: Procedimentos Especiais</h4>
+                        <div class="tema">Tribunal do Júri, Juizados Especiais</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Código Processo Penal arts 406-497</div>
+                            <div class="atividade-detalhes">Tribunal do Júri, plenário, votação</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del3689compilado.htm" target="_blank">📖 CPP</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Procedimentos</div>
+                            <div class="atividade-detalhes">Tribunal Júri, juizados especiais</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (11/10) - Simulado CPP</h4>
+                        <div class="tema">Revisão integrada Processo Penal</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 30 Questões CPP</div>
+                            <div class="atividade-detalhes">Simulado Processo Penal completo</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Correção e Consolidação</div>
+                            <div class="atividade-detalhes">Revisar erros, organizar resumos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-2">
+                    <div class="topics-list" id="topics-list-2"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 7 -->
+            <div class="semana" id="semana-3">
+                <div class="semana-header">
+                    <h2>🔨 Semana 7: Legislação Penal Extravagante</h2>
+                    <p>21/10 - 27/10 | Leis Especiais (7 legislações)</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-3')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-3')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-3">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (21/10) - Lei Maria da Penha (11.340/06)</h4>
+                        <div class="tema">Crimes, medidas protetivas, processo</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Lei 11.340 + Videoaula</div>
+                            <div class="atividade-detalhes">Conceitos, tipos, medidas, competência</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm" target="_blank">📖 Lei 11.340</a>
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 15 Questões Maria da Penha</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (22/10) - Lei Drogas (11.343/06) + ECA (8.069/90)</h4>
+                        <div class="tema">Tráfico, consumo, ato infracional</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Lei 11.343 + Videoaula</div>
+                            <div class="atividade-detalhes">Tipo penal, pena, porte, tráfico</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11343.htm" target="_blank">📖 Lei 11.343</a>
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/leis/l8069.htm" target="_blank">📖 ECA 8.069</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 20 Questões (Drogas + ECA)</div>
+                            <div class="atividade-detalhes">Exercícios integrados</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (23/10) - Lei Hediondos + Desarmamento</h4>
+                        <div class="tema">Crimes hediondos, porte/posse de arma</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Lei 8.072 + Lei 10.826</div>
+                            <div class="atividade-detalhes">Conceito, crimes, penas, prazos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/leis/l8072.htm" target="_blank">📖 Lei 8.072</a>
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/leis/2003/l10.826.htm" target="_blank">📖 Lei 10.826</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 15 Questões (Hediondos)</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (24/10) - Lei Tortura + Lei Preconceito</h4>
+                        <div class="tema">Tortura, discriminação racial, injúria</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Lei 9.455 + Lei 7.716</div>
+                            <div class="atividade-detalhes">Conceitos, elementos, consequências</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/leis/l9455.htm" target="_blank">📖 Lei 9.455</a>
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/leis/l7716.htm" target="_blank">📖 Lei 7.716</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 15 Questões</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (25/10) - Simulado Legislação Extravagante</h4>
+                        <div class="tema">Revisão integrada 7 legislações</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 25 Questões Legislação</div>
+                            <div class="atividade-detalhes">Simulado com leis especiais</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Correção e Revisão</div>
+                            <div class="atividade-detalhes">Consolidar aprendizado</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-3">
+                    <div class="topics-list" id="topics-list-3"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 8 -->
+            <div class="semana" id="semana-4">
+                <div class="semana-header">
+                    <h2>🏛️ Semana 8: Direito Administrativo + Constitucional</h2>
+                    <p>28/10 - 03/11 | Poderes, Princípios, Atos</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-4')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-4')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-4">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (28/10) - Direito Constitucional: Princípios</h4>
+                        <div class="tema">Separação de poderes, direitos fundamentais</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula AlfaCon Const 1/2</div>
+                            <div class="atividade-detalhes">Princípios constitucionais, direitos fundamentais</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=hG5TACMZhSw" target="_blank">🎥 AlfaCon Const</a>
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=I87Y43YFaMI" target="_blank">🎥 Dir Const do Zero</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Constituição Federal arts 1-37</div>
+                            <div class="atividade-detalhes">Princípios, direitos, poderes</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank">📖 CF/88</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (29/10) - Direito Administrativo: Conceitos</h4>
+                        <div class="tema">Estado, administração pública, princípios</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula AlfaCon Admin 1/2</div>
+                            <div class="atividade-detalhes">Conceito, princípios, organização</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=hDRIv5modxY" target="_blank">🎥 AlfaCon Admin</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Dir Admin</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (30/10) - Direito Administrativo: Atos</h4>
+                        <div class="tema">Atos administrativos, validade, efeitos</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula Atos Administrativos</div>
+                            <div class="atividade-detalhes">Conceito, requisitos, vício, invalidação</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=eVvWnm7O7PA" target="_blank">🎥 Aula AEP</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Atos</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (31/10) - Revisão Admin + Const</h4>
+                        <div class="tema">Consolidação de conceitos</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Revisão resumos</div>
+                            <div class="atividade-detalhes">Mapas mentais, flashcards</div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 20 Questões mistas</div>
+                            <div class="atividade-detalhes">Admin + Constitucional integrados</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (01/11) - Simulado Admin + Const</h4>
+                        <div class="tema">Prova integrada semana</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 25 Questões</div>
+                            <div class="atividade-detalhes">Simulado Admin + Const</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Correção</div>
+                            <div class="atividade-detalhes">Rever erros, consolidar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-4">
+                    <div class="topics-list" id="topics-list-4"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 9 -->
+            <div class="semana" id="semana-5">
+                <div class="semana-header">
+                    <h2>📂 Semana 9: Arquivologia + Estatística</h2>
+                    <p>04/11 - 10/11 | Lei 8.159 + Conceitos Estatísticos</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-5')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-5')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-5">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (04/11) - Arquivologia: Lei 8.159/91</h4>
+                        <div class="tema">Arquivos públicos, privados, gestão documental</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula Prof. Marília Cunha</div>
+                            <div class="atividade-detalhes">Lei 8.159/91, princípios, conceitos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=wuQu9iblLII" target="_blank">🎥 Aula 01 Lei 8.159</a>
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=O_no2ybZUqk" target="_blank">🎥 Lei 8.159 CONARQ</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Lei 8.159/91 + CONARQ</div>
+                            <div class="atividade-detalhes">Leitura anotada da lei</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/leis/l8159.htm" target="_blank">📖 Lei 8.159</a>
+                                <a class="link-btn" href="https://www.gov.br/conarq/pt-br" target="_blank">🔗 CONARQ</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (05/11) - Arquivologia: Prática</h4>
+                        <div class="tema">Gestão, classificação, avaliação de documentos</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaulas Complementares</div>
+                            <div class="atividade-detalhes">Classificação, avaliação, eliminação</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=udMt6V0wuWo" target="_blank">🎥 Aula 05 Lei 8.159</a>
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=9_Ey9qu53Yg" target="_blank">🎥 Lei 8.159 Arquivos</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Arquivologia</div>
+                            <div class="atividade-detalhes">Exercícios Lei 8.159</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (06/11) - Estatística: Conceitos Básicos</h4>
+                        <div class="tema">População, amostra, variáveis, distribuição</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Canal Estatística para Concurso</div>
+                            <div class="atividade-detalhes">Conceitos fundamentais, tipos de dados</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/@estatisticaparaconcurso" target="_blank">🎥 Canal Estatística</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Exercícios Estatística</div>
+                            <div class="atividade-detalhes">Prática de cálculos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (07/11) - Estatística: Medidas e Probabilidade</h4>
+                        <div class="tema">Média, mediana, moda, desvio padrão</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Videoaulas + Exercícios</div>
+                            <div class="atividade-detalhes">Medidas de tendência central e dispersão</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/@estatisticaparaconcurso" target="_blank">🎥 Canal Estatística</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 15 Questões Estatística</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (08/11) - Simulado Arquivologia + Estatística</h4>
+                        <div class="tema">Revisão integrada</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 20 Questões (Arq + Estat)</div>
+                            <div class="atividade-detalhes">Simulado integrado</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Correção e Consolidação</div>
+                            <div class="atividade-detalhes">Rever erros, organizar resumos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-5">
+                    <div class="topics-list" id="topics-list-5"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 10 -->
+            <div class="semana" id="semana-6">
+                <div class="semana-header">
+                    <h2>🔬 Semana 10: Medicina Legal + Atualidades</h2>
+                    <p>11/11 - 17/11 | Perícia, Necropsia, Notícias Jurídicas</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-6')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-6')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-6">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (11/11) - Medicina Legal: Conceitos</h4>
+                        <div class="tema">Perícia, perito, local de crime</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula Medicina Legal</div>
+                            <div class="atividade-detalhes">Conceitos, objetivos, importância</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=qwVOX4HmwJ4" target="_blank">🎥 Medicina Legal Polícia</a>
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=VYkosV9AYJE" target="_blank">🎥 ML PC/BA</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Medicina Legal</div>
+                            <div class="atividade-detalhes">Exercícios básicos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (12/11) - Medicina Legal: Traumatologia</h4>
+                        <div class="tema">Lesões, traumatismos, causa morte</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Videoaulas Traumatologia</div>
+                            <div class="atividade-detalhes">Ferimentos, fraturas, queimaduras</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=1Tczq7wJXS4" target="_blank">🎥 ML Concurso 3.0</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 15 Questões Traumatologia</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (13/11) - Medicina Legal: Tanatologia</h4>
+                        <div class="tema">Morte, fenômenos cadavéricos, decomposição</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Videoaulas Tanatologia</div>
+                            <div class="atividade-detalhes">Morte real, aparente, necropsia</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=qwVOX4HmwJ4" target="_blank">🎥 ML Polícia</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 15 Questões Tanatologia</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (14/11) - Atualidades Jurídicas</h4>
+                        <div class="tema">Notícias, jurisprudência recente 2024-2026</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Acompanhamento Notícias</div>
+                            <div class="atividade-detalhes">STF, STJ, legislações novas, súmulas</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.stf.jus.br/" target="_blank">🔗 STF Notícias</a>
+                                <a class="link-btn" href="https://www.stj.jus.br/" target="_blank">🔗 STJ Jurisprudência</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Revisão integrada</div>
+                            <div class="atividade-detalhes">Consolidar conhecimento semana</div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (15/11) - Simulado Medicina Legal</h4>
+                        <div class="tema">Revisão prática</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 20 Questões Medicina Legal</div>
+                            <div class="atividade-detalhes">Simulado integrado</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Correção e Revisão</div>
+                            <div class="atividade-detalhes">Consolidar aprendizado</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-6">
+                    <div class="topics-list" id="topics-list-6"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 11 -->
+            <div class="semana" id="semana-7">
+                <div class="semana-header">
+                    <h2>💻 Semana 11: Informática + Igualdade Racial</h2>
+                    <p>18/11 - 24/11 | Hardware, Software, Lei 12.288</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-7')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-7')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-7">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (18/11) - Informática: Conceitos Básicos</h4>
+                        <div class="tema">Hardware, software, sistemas operacionais</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula AlfaCon Informática</div>
+                            <div class="atividade-detalhes">Conceitos básicos, componentes, SO</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=T6vOSAqQKwc" target="_blank">🎥 AlfaCon Info 1/2</a>
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=KHkSTnK1sCw" target="_blank">🎥 Info Conceitos Básicos</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Informática</div>
+                            <div class="atividade-detalhes">Exercícios básicos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (19/11) - Informática: Segurança e Internet</h4>
+                        <div class="tema">Senhas, criptografia, malware, navegadores</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaulas Segurança</div>
+                            <div class="atividade-detalhes">Segurança de dados, internet segura</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/playlist?list=PLKaxXxugagVtymONkVP_I9cjp7vwSbyye" target="_blank">🎥 Playlist Info</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 20 Questões Segurança</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (20/11) - Lei Igualdade Racial 12.288/10</h4>
+                        <div class="tema">Políticas de ação afirmativa, cotas, direitos</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Videoaula Estatuto Igualdade</div>
+                            <div class="atividade-detalhes">Lei 12.288/10, direitos, políticas</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.youtube.com/watch?v=M97wAI3-J4o" target="_blank">🎥 Estatuto Igualdade Racial</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Lei 12.288 + Leitura</div>
+                            <div class="atividade-detalhes">Análise da lei, conceitos principais</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12288.htm" target="_blank">📖 Lei 12.288</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (21/11) - Igualdade Racial: Práticas e Exercícios</h4>
+                        <div class="tema">Aplicação da lei, conceitos, direitos</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: Resumo Lei 12.288</div>
+                            <div class="atividade-detalhes">Principais artigos, conceitos, sanções</div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">50min: 15 Questões Igualdade Racial</div>
+                            <div class="atividade-detalhes">Exercícios práticos</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (22/11) - Simulado Info + Igualdade</h4>
+                        <div class="tema">Revisão integrada</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: 20 Questões (Info + Igualdade)</div>
+                            <div class="atividade-detalhes">Simulado integrado</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Correção e Consolidação</div>
+                            <div class="atividade-detalhes">Rever erros, consolidar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-7">
+                    <div class="topics-list" id="topics-list-7"></div>
+                </div>
+            </div>
+
+            <!-- SEMANA 12 -->
+            <div class="semana" id="semana-8">
+                <div class="semana-header">
+                    <h2>🎯 Semana 12: Revisão Final + Simulados</h2>
+                    <p>25/11 - 06/12 | RETA FINAL | Prova 06/12/2026</p>
+                </div>
+
+                <div class="tabs-content">
+                    <button class="active-tab" onclick="switchTab(this, 'cron-8')">📅 Cronograma</button>
+                    <button onclick="switchTab(this, 'topics-8')">✓ Tópicos</button>
+                </div>
+
+                <div class="tab-pane active-pane" id="cron-8">
+                    <div class="cronograma-dia">
+                        <h4>Segunda (25/11) - Revisão Semanas 1-4</h4>
+                        <div class="tema">Português, Raciocínio Lógico, Dir. Penal</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">120min: Simulado 40 Questões</div>
+                            <div class="atividade-detalhes">Port (10) + RL (10) + DP (20)</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab Simulado</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Terça (26/11) - Revisão Semanas 5-8</h4>
+                        <div class="tema">Direito Processual, Legislação, Admin</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">120min: Simulado 40 Questões</div>
+                            <div class="atividade-detalhes">CPP (15) + Leg (10) + Admin (15)</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab Simulado</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quarta (27/11) - Revisão Semanas 9-11</h4>
+                        <div class="tema">Arquivologia, Medicina Legal, Info, Igualdade</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">120min: Simulado 30 Questões</div>
+                            <div class="atividade-detalhes">Arq (5) + ML (10) + Info (8) + Igualdade (7)</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab Simulado</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Quinta (28/11) - Simulado Completo 100 Questões</h4>
+                        <div class="tema">PROVA COMPLETA - exatamente como será</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">180min: 100 Questões (40 gerais + 60 específicas)</div>
+                            <div class="atividade-detalhes">Simular horário real de prova: 9h às 12h30</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab Simulado Completo</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sexta (29/11) - Correção e Análise Simulado</h4>
+                        <div class="tema">Identificar últimas fraquezas</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">120min: Corrigir 100 Questões</div>
+                            <div class="atividade-detalhes">Registrar erros, mapear temas fracos</div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">60min: Revisão Final Temas Fracos</div>
+                            <div class="atividade-detalhes">Focar nos tópicos com mais erro</div>
+                        </div>
+                    </div>
+
+                    <div class="cronograma-dia">
+                        <h4>Sábado (30/11) até Sexta (06/12) - RETA FINAL</h4>
+                        <div class="tema">Uma semana antes da prova</div>
+                        <div class="atividade">
+                            <div class="atividade-nome">1-2 Simulados / dia</div>
+                            <div class="atividade-detalhes">Manter ritmo, revisar resumos, descanso</div>
+                            <div class="links">
+                                <a class="link-btn" href="https://www.q7lab.com.br/questoes-de-concurso-gratis/" target="_blank">📝 Q7Lab</a>
+                            </div>
+                        </div>
+                        <div class="atividade">
+                            <div class="atividade-nome">Dia 06/12 - PROVA FINAL ⏰ 09h</div>
+                            <div class="atividade-detalhes">100 questões | 3h30min | BOA SORTE! 🎯</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="topics-8">
+                    <div class="topics-list" id="topics-list-8"></div>
                 </div>
             </div>
         </div>
 
-        <div class="weeks-grid" id="weeks-grid"></div>
-
-        <div class="content-area" id="content-area"></div>
-
-        <div class="note-box">
-            <strong>💾 Seus dados são salvos automaticamente</strong> no navegador. Você pode fechar e reabrir que tudo continua marcado. <strong>✅ Todos os links foram verificados e testados!</strong>
+        <div class="footer">
+            <p>✅ Dashboard Concurso Escrivão BA 2026 | 12 semanas | 78 horas | 100% Gratuito</p>
+            <p>Última atualização: 06/09/2026 | Prova: 06/12/2026</p>
         </div>
-
-        <footer>
-            <p>Dashboard criado para acompanhar seu progresso no estudo para Escrivão de Polícia Civil (Bahia)</p>
-            <p style="margin-top: 10px; opacity: 0.7;">Atualizado em: <span id="last-update">Agora</span></p>
-        </footer>
     </div>
 
     <script>
-        const weeks = [
+        const semanas = [
             {
-                title: "Semana 1-2: Fundação Jurídica",
-                subtitle: "09/09 - 22/09",
-                hasCronograma: true,
-                cronograma: [
-                    {
-                        dia: "Segunda (09/09)",
-                        tema: "Português: Compreensão e Interpretação",
-                        atividades: [
-                            {
-                                nome: "Videoaula - Compreensão de Texto",
-                                tempo: "50 min",
-                                conteudo: "Fundamentos de compreensão leitora, tipos de texto, interpretação de textos jurídicos.",
-                                links: [
-                                    { texto: "🎥 YouTube - Técnicas de Linguagem Jurídica", url: "https://www.youtube.com/watch?v=NPYhC8b5k_4", icon: "🎥" },
-                                    { texto: "🎥 YouTube - Compreensão e Interpretação", url: "https://www.youtube.com/watch?v=K-z7ADHR6Sc", icon: "🎥" }
-                                ]
-                            },
-                            {
-                                nome: "Leitura - Manual de Redação Oficial",
-                                tempo: "50 min",
-                                conteudo: "Leitura das páginas 1-20 do Manual da Presidência. Foco em estrutura básica de documentos jurídicos e redação oficial.",
-                                links: [
-                                    { texto: "📘 Manual Redação (Official Gov.br)", url: "https://www.gov.br/pt-br/servicos/consultar-o-manual-de-redacao-da-presidencia-da-republica", icon: "📘" },
-                                    { texto: "📄 Manual Redação (PDF 2024)", url: "https://midiasstoragesec.blob.core.windows.net/001/2024/04/desbc_manual_redacao_ed_1_2024_966bcd74e8482da1569c6b839996c0dd.pdf", icon: "📄" },
-                                    { texto: "📑 Manual Redação (PDF Alt.)", url: "https://juspodium.net/manual_redacao_oficial.pdf", icon: "📑" }
-                                ]
-                            }
-                        ],
-                        topicos: [
-                            "Videoaula Compreensão Textual",
-                            "Manual Redação Oficial (pág 1-20)"
-                        ]
-                    },
-                    {
-                        dia: "Terça (10/09)",
-                        tema: "Raciocínio Lógico: Lógica Proposicional",
-                        atividades: [
-                            {
-                                nome: "Videoaula - Lógica Proposicional",
-                                tempo: "50 min",
-                                conteudo: "Proposições, conectivos lógicos (e, ou, não, se...então), tabelas verdade, argumentação.",
-                                links: [
-                                    { texto: "🎥 YouTube - Guilherme Neves (Lógica Proposicional)", url: "https://www.youtube.com/watch?v=cwk84JcONaU", icon: "🎥" },
-                                    { texto: "🎥 Playlist - Lógica Sentencial Completa", url: "https://www.youtube.com/playlist?list=PLKa4ksSoV33K-93BRUX-Rn3JtjTxCVtO0", icon: "🎥" }
-                                ]
-                            },
-                            {
-                                nome: "Exercícios - Lógica Proposicional",
-                                tempo: "50 min",
-                                conteudo: "Resolver 15-20 questões de lógica proposicional do nível básico. Sem limite de questões.",
-                                links: [
-                                    { texto: "📝 Q7Lab - Questões SEM LIMITE (Gratuito)", url: "https://www.q7lab.com.br/questoes-de-concurso-gratis/", icon: "📝" }
-                                ]
-                            }
-                        ],
-                        topicos: [
-                            "Videoaula Lógica Proposicional",
-                            "15-20 questões (Q7Lab)"
-                        ]
-                    },
-                    {
-                        dia: "Quarta (11/09)",
-                        tema: "Português: Semântica Jurídica",
-                        atividades: [
-                            {
-                                nome: "Leitura - Canal YouTube sobre Português Jurídico",
-                                tempo: "50 min",
-                                conteudo: "Assistir vídeos sobre semântica jurídica, sinonímia, antonímia, figuras de linguagem em textos jurídicos.",
-                                links: [
-                                    { texto: "🎥 Canal 'Entendeu Direito ou Quer que Desenhe' (Português)", url: "https://www.youtube.com/@entendeudireitoED", icon: "🎥" }
-                                ]
-                            },
-                            {
-                                nome: "Resumo e Anotações em Documento",
-                                tempo: "50 min",
-                                conteudo: "Criar documento com resumo de conceitos: sinonímia, antonímia, figuras de linguagem aplicadas ao direito.",
-                                links: [
-                                    { texto: "📌 Usar Google Drive ou Notion para anotações", url: "https://drive.google.com", icon: "📌" }
-                                ]
-                            }
-                        ],
-                        topicos: [
-                            "Vídeos - Semântica Jurídica",
-                            "Resumo em documento"
-                        ]
-                    },
-                    {
-                        dia: "Quinta (12/09)",
-                        tema: "Raciocínio Lógico: Proporções",
-                        atividades: [
-                            {
-                                nome: "Videoaula - Proporções e Regra de Três",
-                                tempo: "50 min",
-                                conteudo: "Proporções diretas, inversas, regra de três simples e composta, aplicações práticas.",
-                                links: [
-                                    { texto: "🎥 YouTube - Guilherme Neves (Proporções)", url: "https://www.youtube.com/watch?v=G1o-CwQ_TO4", icon: "🎥" }
-                                ]
-                            },
-                            {
-                                nome: "Exercícios - Proporções",
-                                tempo: "50 min",
-                                conteudo: "Resolver 20 questões sobre proporções, regra de três simples e composta.",
-                                links: [
-                                    { texto: "📝 Q7Lab - Questões SEM LIMITE (Gratuito)", url: "https://www.q7lab.com.br/questoes-de-concurso-gratis/", icon: "📝" }
-                                ]
-                            }
-                        ],
-                        topicos: [
-                            "Videoaula Proporções",
-                            "20 questões proporções"
-                        ]
-                    },
-                    {
-                        dia: "Sexta (13/09)",
-                        tema: "Simulado Mini - Português",
-                        atividades: [
-                            {
-                                nome: "Simulado Mini - 30 Questões de Português",
-                                tempo: "60 min",
-                                conteudo: "Realizar prova simulada com 30 questões de português. Marcar tempo: máximo 2 horas.",
-                                links: [
-                                    { texto: "📝 Q7Lab - Simulado de Português", url: "https://www.q7lab.com.br/questoes-de-concurso-gratis/", icon: "📝" }
-                                ]
-                            },
-                            {
-                                nome: "Correção e Revisão",
-                                tempo: "60 min",
-                                conteudo: "Revisar respostas erradas. Buscar vídeos sobre tópicos com mais erros. Anotar erros comuns.",
-                                links: [
-                                    { texto: "🎥 YouTube - Buscar por tópico com erro", url: "https://www.youtube.com", icon: "🎥" }
-                                ]
-                            }
-                        ],
-                        topicos: [
-                            "Simulado 30 questões Português",
-                            "Correção e revisão"
-                        ]
-                    }
-                ],
+                title: "Semana 1-2",
                 topics: [
-                    "Português - Compreensão e interpretação",
-                    "Português - Semântica e gêneros textuais",
-                    "Português - Morfologia e estrutura",
-                    "Português - Sintaxe e concordância",
-                    "Português - Redação Oficial",
-                    "Português - Elementos de coesão",
-                    "Raciocínio Lógico - Conjuntos numéricos",
-                    "Raciocínio Lógico - Proporções e regra de três",
-                    "Raciocínio Lógico - Lógica proposicional",
-                    "Raciocínio Lógico - Diagramas lógicos",
-                    "Raciocínio Lógico - Problemas aritméticos",
-                    "Raciocínio Lógico - Sequências e progressões",
-                    "Atualidades - Segurança pública e legislação",
-                    "Informática - Windows 11",
-                    "Informática - Office 365",
-                    "Informática - Internet e segurança",
-                    "Legislação Geral - Lei nº 11.370/09",
-                    "Legislação Geral - Lei nº 6.677/94"
+                    "Português - Compreensão textual",
+                    "Português - Interpretação de texto",
+                    "Português - Semântica jurídica",
+                    "Português - Técnicas de redação",
+                    "Português - Manual de redação oficial",
+                    "Raciocínio Lógico - Proposições",
+                    "Raciocínio Lógico - Conectivos lógicos",
+                    "Raciocínio Lógico - Tabelas verdade",
+                    "Raciocínio Lógico - Proporções",
+                    "Raciocínio Lógico - Conjuntos lógicos"
                 ]
             },
             {
-                title: "Semana 3-4: Direito Penal Essencial",
-                subtitle: "23/09 - 06/10",
-                hasCronograma: false,
+                title: "Semana 3-4",
                 topics: [
                     "Direito Penal - Princípios fundamentais",
-                    "Direito Penal - Conceito e caracteres",
-                    "Direito Penal - Aplicação da lei no tempo",
-                    "Direito Penal - Aplicação da lei no espaço",
-                    "Direito Penal - Teorias da conduta",
+                    "Direito Penal - Lei penal no tempo",
+                    "Direito Penal - Lei penal no espaço",
+                    "Direito Penal - Conceito de crime",
                     "Direito Penal - Fato típico",
-                    "Direito Penal - Resultado e nexo causal",
-                    "Direito Penal - Tipicidade e atipicidade",
-                    "Direito Penal - Ilicitude e causas de exclusão",
+                    "Direito Penal - Resultado penal",
+                    "Direito Penal - Nexo causal",
+                    "Direito Penal - Tipicidade",
+                    "Direito Penal - Ilicitude",
                     "Direito Penal - Culpabilidade",
-                    "Direito Penal - Tipos de crime",
-                    "Direito Penal - Crimes contra pessoa",
-                    "Direito Penal - Crimes contra patrimônio",
-                    "Direito Penal - Crimes contra dignidade sexual",
-                    "Direito Penal - Crimes contra administração pública",
-                    "Direito Penal - Pena e sua aplicação",
-                    "Direito Penal - Medidas de segurança"
+                    "Direito Penal - Imputabilidade",
+                    "Direito Penal - Pena e aplicação",
+                    "Direito Penal - Medidas de segurança",
+                    "Direito Penal - Extinção de punibilidade"
                 ]
             },
             {
-                title: "Semana 5-6: Direito Processual Penal ⭐",
-                subtitle: "07/10 - 20/10",
-                hasCronograma: false,
+                title: "Semana 5-6",
                 topics: [
-                    "Processual Penal - Princípios gerais",
-                    "Processual Penal - Sistema acusatório",
-                    "Processual Penal - Inquérito policial - Conceito",
-                    "Processual Penal - Inquérito - Instauração",
-                    "Processual Penal - Inquérito - Procedimento",
-                    "Processual Penal - Inquérito - Arquivamento",
-                    "Processual Penal - Provas - Conceito e classificação",
-                    "Processual Penal - Sistemas de prova",
-                    "Processual Penal - Testemunhas",
-                    "Processual Penal - Perícia e peritos",
-                    "Processual Penal - Busca e apreensão",
-                    "Processual Penal - Prisão em flagrante",
-                    "Processual Penal - Prisão preventiva",
-                    "Processual Penal - Medidas cautelares",
-                    "Processual Penal - Competência",
-                    "Processual Penal - Sujeitos do processo",
-                    "Processual Penal - Procedimento comum",
-                    "Processual Penal - Nulidades processuais"
+                    "Processo Penal - Princípios fundamentais",
+                    "Processo Penal - Sistema acusatório",
+                    "Processo Penal - Inquérito policial",
+                    "Processo Penal - Instauração do inquérito",
+                    "Processo Penal - Competência",
+                    "Processo Penal - Ação penal",
+                    "Processo Penal - Denúncia e queixa",
+                    "Processo Penal - Provas e meios",
+                    "Processo Penal - Testemunhas",
+                    "Processo Penal - Perícia",
+                    "Processo Penal - Documentos",
+                    "Processo Penal - Tribunal do Júri",
+                    "Processo Penal - Plenário do júri",
+                    "Processo Penal - Juizados Especiais"
                 ]
             },
             {
-                title: "Semana 7: Legislação Penal Extravagante",
-                subtitle: "21/10 - 27/10",
-                hasCronograma: false,
+                title: "Semana 7",
                 topics: [
-                    "Lei nº 9.099/95 - Juizados Especiais Criminais",
-                    "Lei nº 8.069/90 - Estatuto da Criança e do Adolescente",
-                    "Lei nº 11.340/06 - Lei Maria da Penha",
-                    "Lei nº 10.826/03 - Estatuto do Desarmamento",
-                    "Lei nº 11.343/06 - Lei de Drogas",
-                    "Lei nº 12.850/13 - Organizações Criminosas",
-                    "Lei nº 8.072/90 - Crimes Hediondos",
-                    "Lei nº 7.716/89 - Crimes de Preconceito",
-                    "Lei nº 13.869/19 - Abuso de Autoridade",
-                    "Lei nº 9.455/97 - Tortura",
-                    "Lei nº 9.503/97 - Código de Trânsito",
-                    "Lei nº 8.137/90 - Crimes tributários",
-                    "Lei nº 9.605/98 - Crimes ambientais",
-                    "Lei nº 7.960/89 - Prisão temporária"
+                    "Lei Maria da Penha - Conceito",
+                    "Lei Maria da Penha - Crimes",
+                    "Lei Maria da Penha - Medidas protetivas",
+                    "Lei Drogas 11.343 - Tráfico",
+                    "Lei Drogas 11.343 - Consumo",
+                    "ECA 8.069 - Ato infracional",
+                    "ECA 8.069 - Medidas socioeducativas",
+                    "Lei Hediondos 8.072 - Conceitos",
+                    "Lei Desarmamento 10.826 - Porte e posse",
+                    "Lei Tortura 9.455 - Tipificação",
+                    "Lei Preconceito 7.716 - Racismo",
+                    "Lei Preconceito 7.716 - Injúria racial"
                 ]
             },
             {
-                title: "Semana 8: Direito Administrativo + Constitucional",
-                subtitle: "28/10 - 03/11",
-                hasCronograma: false,
+                title: "Semana 8",
                 topics: [
-                    "Dir. Administrativo - Organização administrativa",
-                    "Dir. Administrativo - Atos administrativos",
-                    "Dir. Administrativo - Requisitos e elementos",
-                    "Dir. Administrativo - Classificação de atos",
-                    "Dir. Administrativo - Poder hierárquico",
-                    "Dir. Administrativo - Poder disciplinar",
-                    "Dir. Administrativo - Poder regulamentar",
-                    "Dir. Administrativo - Responsabilidade civil",
-                    "Dir. Administrativo - Regime jurídico-administrativo",
-                    "Dir. Constitucional - Direitos e garantias fundamentais",
-                    "Dir. Constitucional - Segurança pública",
-                    "Dir. Constitucional - Organização dos poderes",
-                    "Dir. Constitucional - Garantias constitucionais",
-                    "Dir. Constitucional - Arts. 1º, 3º, 4º, 5º CF/88"
+                    "Direito Constitucional - Princípios",
+                    "Direito Constitucional - Direitos fundamentais",
+                    "Direito Constitucional - Deveres",
+                    "Direito Constitucional - Separação de poderes",
+                    "Direito Administrativo - Conceito",
+                    "Direito Administrativo - Princípios",
+                    "Direito Administrativo - Atos administrativos",
+                    "Direito Administrativo - Validade e vício",
+                    "Direito Administrativo - Extinção de atos",
+                    "Direito Administrativo - Responsabilidade civil"
                 ]
             },
             {
-                title: "Semana 9: Arquivologia + Estatística",
-                subtitle: "04/11 - 10/11",
-                hasCronograma: false,
+                title: "Semana 9",
                 topics: [
-                    "Arquivologia - Conceitos e princípios",
-                    "Arquivologia - Gestão de documentos",
-                    "Arquivologia - Protocolo - Recebimento",
-                    "Arquivologia - Protocolo - Registro",
-                    "Arquivologia - Protocolo - Distribuição",
-                    "Arquivologia - Classificação de arquivos",
-                    "Arquivologia - Ordenação de documentos",
-                    "Arquivologia - Tabela de temporalidade",
-                    "Arquivologia - Acondicionamento",
-                    "Arquivologia - Preservação e conservação",
-                    "Arquivologia - Tipologias documentais",
-                    "Estatística - Estatística descritiva",
-                    "Estatística - Gráficos e tabelas",
+                    "Arquivologia - Lei 8.159/91",
+                    "Arquivologia - Conceitos",
+                    "Arquivologia - Arquivos públicos e privados",
+                    "Arquivologia - Gestão documental",
+                    "Arquivologia - Classificação de documentos",
+                    "Arquivologia - Avaliação e seleção",
+                    "Arquivologia - CONARQ",
+                    "Estatística - Conceitos básicos",
+                    "Estatística - População e amostra",
+                    "Estatística - Variáveis e dados",
+                    "Estatística - Medidas de tendência central",
+                    "Estatística - Medidas de dispersão",
                     "Estatística - Probabilidade básica"
                 ]
             },
             {
-                title: "Semana 10: Medicina Legal + Atualidades",
-                subtitle: "11/11 - 17/11",
-                hasCronograma: false,
+                title: "Semana 10",
                 topics: [
-                    "Medicina Legal - Conceito e importância",
-                    "Medicina Legal - Corpo de delito",
-                    "Medicina Legal - Perícia e peritos",
-                    "Medicina Legal - Identidade e identificação",
-                    "Medicina Legal - Lesões corporais",
+                    "Medicina Legal - Conceitos",
+                    "Medicina Legal - Perícia",
+                    "Medicina Legal - Perito criminal",
+                    "Medicina Legal - Local de crime",
+                    "Medicina Legal - Traumatologia",
+                    "Medicina Legal - Ferimentos",
+                    "Medicina Legal - Fraturas",
+                    "Medicina Legal - Tanatologia",
+                    "Medicina Legal - Morte real e aparente",
                     "Medicina Legal - Fenômenos cadavéricos",
-                    "Medicina Legal - Morte súbita",
-                    "Medicina Legal - Exame de local de crime",
-                    "Medicina Legal - Crimes contra dignidade sexual",
-                    "Medicina Legal - Asfixias",
-                    "Medicina Legal - Violência doméstica",
-                    "Atualidades - Segurança pública",
-                    "Atualidades - Tecnologia e justiça",
-                    "Atualidades - Legislação recente"
+                    "Medicina Legal - Causa e tempo morte",
+                    "Medicina Legal - Necropsia"
                 ]
             },
             {
-                title: "Semana 11: Informática + Igualdade",
-                subtitle: "18/11 - 24/11",
-                hasCronograma: false,
+                title: "Semana 11",
                 topics: [
-                    "Informática - Windows 11 (revisão)",
-                    "Informática - Office 365 (revisão)",
-                    "Informática - Internet (revisão)",
-                    "Informática - Segurança da informação",
-                    "Informática - Backup e sincronização",
-                    "Igualdade Racial - Constituição Federal",
-                    "Igualdade Racial - Lei nº 12.288/10",
-                    "Igualdade Racial - Lei nº 7.716/89",
-                    "Igualdade Racial - Lei Maria da Penha (revisão)",
-                    "Igualdade Racial - Lei nº 13.182/14 (Bahia)",
-                    "Igualdade Racial - Jurisprudência aplicada",
-                    "Igualdade Racial - Conceitos principais"
+                    "Informática - Hardware básico",
+                    "Informática - Componentes do computador",
+                    "Informática - Software e sistemas",
+                    "Informática - Windows/Linux",
+                    "Informática - Office (Word, Excel, PowerPoint)",
+                    "Informática - Internet e navegadores",
+                    "Informática - Email",
+                    "Informática - Segurança de dados",
+                    "Informática - Criptografia",
+                    "Informática - Malware e antivírus",
+                    "Igualdade Racial - Lei 12.288/10",
+                    "Igualdade Racial - Direitos e deveres",
+                    "Igualdade Racial - Políticas afirmativas"
                 ]
             },
             {
-                title: "Semana 12: Revisão + Simulados",
-                subtitle: "25/11 - 06/12",
-                hasCronograma: false,
+                title: "Semana 12",
                 topics: [
                     "Revisão - Português",
                     "Revisão - Raciocínio Lógico",
                     "Revisão - Direito Penal",
-                    "Revisão - Processual Penal",
-                    "Revisão - Legislação Penal Extravagante",
+                    "Revisão - Direito Processual Penal",
+                    "Revisão - Legislação Extravagante",
                     "Revisão - Direito Administrativo",
                     "Revisão - Direito Constitucional",
                     "Revisão - Arquivologia",
+                    "Revisão - Estatística",
                     "Revisão - Medicina Legal",
-                    "Revisão - Igualdade Racial",
                     "Revisão - Informática",
-                    "Simulado 1 - 100 questões",
-                    "Simulado 2 - 100 questões"
+                    "Revisão - Igualdade Racial",
+                    "Simulados - 100 questões",
+                    "Prova Final - 06/12/2026"
                 ]
             }
         ];
 
-        let currentWeek = 0;
-        let data = {};
-
-        function loadData() {
-            const saved = localStorage.getItem('estudoEscrivaoData');
-            if (saved) {
-                try {
-                    data = JSON.parse(saved);
-                } catch {
-                    initData();
-                }
-            } else {
-                initData();
-            }
-        }
-
-        function initData() {
-            weeks.forEach((w, i) => {
-                data[i] = {};
-                w.topics.forEach((t, j) => {
-                    data[i][j] = false;
-                });
-            });
-        }
-
-        function saveData() {
-            localStorage.setItem('estudoEscrivaoData', JSON.stringify(data));
+        function showSemana(index) {
+            document.querySelectorAll('.semana').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`semana-${index}`).classList.add('active');
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
+            renderTopics(index);
             updateStats();
-            document.getElementById('last-update').textContent = new Date().toLocaleTimeString('pt-BR');
         }
 
-        function toggleTopic(weekIdx, topicIdx) {
-            data[weekIdx][topicIdx] = !data[weekIdx][topicIdx];
-            saveData();
-            renderWeek(weekIdx);
-        }
-
-        function toggleDayCard(btn) {
-            btn.classList.toggle('active');
-            btn.nextElementSibling.classList.toggle('active');
-        }
-
-        function renderWeekButtons() {
-            const grid = document.getElementById('weeks-grid');
-            grid.innerHTML = '';
-            weeks.forEach((w, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'week-btn' + (i === 0 ? ' active' : '');
-                const weekLabels = ['1-2', '3-4', '5-6', '7', '8', '9', '10', '11', '12'];
-                btn.textContent = `Sem ${weekLabels[i]}`;
-                btn.onclick = () => selectWeek(i);
-                grid.appendChild(btn);
-            });
-        }
-
-        function renderWeek(weekIdx) {
-            const week = weeks[weekIdx];
-            const completed = week.topics.filter((_, j) => data[weekIdx][j]).length;
-            const percent = Math.round((completed / week.topics.length) * 100);
-
-            let html = `
-                <h2>${week.title}</h2>
-                <p class="subtitle">${week.subtitle}</p>
-                
-                <div class="week-progress">
-                    <div class="week-progress-bar">
-                        <div class="week-progress-fill" style="width: ${percent}%;"></div>
-                    </div>
-                    <div class="week-progress-text">${completed}/${week.topics.length}</div>
-                </div>
-            `;
-
-            if (week.hasCronograma) {
-                html += renderCronograma(weekIdx, week);
-            }
-
-            html += renderTopics(weekIdx, week);
-
-            document.getElementById('content-area').innerHTML = html;
-
-            setTimeout(() => {
-                document.querySelectorAll('.day-header').forEach(header => {
-                    header.addEventListener('click', function() {
-                        toggleDayCard(this);
-                    });
-                });
-                document.querySelectorAll('.topic-item').forEach(item => {
-                    item.addEventListener('click', function(e) {
-                        const input = this.querySelector('input[type="checkbox"]');
-                        const weekIdx = parseInt(input.dataset.week);
-                        const topicIdx = parseInt(input.dataset.topic);
-                        toggleTopic(weekIdx, topicIdx);
-                    });
-                });
-            }, 0);
-        }
-
-        function renderCronograma(weekIdx, week) {
-            let html = '<div class="tab-buttons">';
-            html += '<button class="tab-btn active" onclick="switchTab(this, 0)">📅 Cronograma</button>';
-            html += '<button class="tab-btn" onclick="switchTab(this, 1)">✓ Tópicos</button>';
-            html += '</div>';
-
-            html += '<div class="tab-content active">';
-            week.cronograma.forEach(dia => {
-                html += `
-                    <div class="day-card">
-                        <div class="day-header active">
-                            <div>${dia.dia} - ${dia.tema}</div>
-                            <div class="toggle">▼</div>
-                        </div>
-                        <div class="day-content active">
-                            <div class="day-body">
+        function renderTopics(index) {
+            const topicsList = document.getElementById(`topics-list-${index}`);
+            if (!topicsList) return;
+            
+            topicsList.innerHTML = '';
+            semanas[index].topics.forEach((topic, i) => {
+                const key = `topic-${index}-${i}`;
+                const isCompleted = localStorage.getItem(key) === 'true';
+                const div = document.createElement('div');
+                div.className = `topic ${isCompleted ? 'completed' : ''}`;
+                div.innerHTML = `
+                    <input type="checkbox" id="${key}" ${isCompleted ? 'checked' : ''} onchange="updateProgress()">
+                    <label for="${key}">${topic}</label>
                 `;
-
-                dia.atividades.forEach(atividade => {
-                    html += `
-                        <div class="activity">
-                            <div class="activity-title">⏰ ${atividade.nome}</div>
-                            <div class="activity-time">${atividade.tempo}</div>
-                            <div class="activity-content">${atividade.conteudo}</div>
-                            <div class="links-group">
-                    `;
-                    atividade.links.forEach(link => {
-                        html += `
-                            <div class="link-item">
-                                <a href="${link.url}" target="_blank">${link.texto}</a>
-                                <span class="link-icon">🔗</span>
-                            </div>
-                        `;
-                    });
-                    html += '</div>';
-                    html += `
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="activity-${Math.random()}">
-                            <label for="activity-${Math.random()}">Atividade concluída</label>
-                        </div>
-                    `;
-                    html += '</div>';
-                });
-
-                html += `
-                            </div>
-                        </div>
-                    </div>
-                `;
+                topicsList.appendChild(div);
             });
-            html += '</div>';
-
-            return html;
         }
 
-        function renderTopics(weekIdx, week) {
-            let html = '';
-            if (week.hasCronograma) {
-                html += '<div class="tab-content">';
-            }
-            html += '<div class="topics-list">';
-            week.topics.forEach((topic, j) => {
-                const checked = data[weekIdx][j];
-                html += `
-                    <div class="topic-item">
-                        <input type="checkbox" data-week="${weekIdx}" data-topic="${j}" ${checked ? 'checked' : ''}>
-                        <label>${topic}</label>
-                        <div class="check-mark">${checked ? '✓' : ''}</div>
-                    </div>
-                `;
-            });
-            html += '</div>';
-            if (week.hasCronograma) {
-                html += '</div>';
-            }
-            return html;
+        function switchTab(btn, paneId) {
+            btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active-tab'));
+            btn.parentElement.parentElement.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active-pane'));
+            btn.classList.add('active-tab');
+            document.getElementById(paneId).classList.add('active-pane');
         }
 
-        function selectWeek(idx) {
-            currentWeek = idx;
-            document.querySelectorAll('.week-btn').forEach((btn, i) => {
-                btn.classList.toggle('active', i === idx);
-            });
-            renderWeek(idx);
+        function updateProgress() {
+            let total = 0, completed = 0;
+            for (let i = 0; i < semanas.length; i++) {
+                for (let j = 0; j < semanas[i].topics.length; j++) {
+                    const key = `topic-${i}-${j}`;
+                    total++;
+                    if (document.getElementById(key)?.checked) {
+                        completed++;
+                        localStorage.setItem(key, 'true');
+                    } else {
+                        localStorage.removeItem(key);
+                    }
+                }
+            }
+            updateStats();
         }
 
         function updateStats() {
-            let total = 0, completed = 0, weeksCompleted = 0;
-            weeks.forEach((w, i) => {
-                let weekDone = 0;
-                w.topics.forEach((_, j) => {
-                    total++;
-                    if (data[i][j]) {
-                        completed++;
-                        weekDone++;
-                    }
-                });
-                if (weekDone === w.topics.length) weeksCompleted++;
-            });
-
-            const percent = Math.round((completed / total) * 100);
-            document.getElementById('overall-percent').textContent = percent + '%';
-            document.getElementById('completed-stat').textContent = completed;
-            document.getElementById('remaining-stat').textContent = total - completed;
-            document.getElementById('weeks-completed').textContent = weeksCompleted + '/' + weeks.length;
-            document.getElementById('progress-info').textContent = `${completed} de ${total} tópicos concluídos`;
-
-            const fill = document.getElementById('overall-progress');
-            fill.style.width = percent + '%';
+            let total = 0, completed = 0;
+            for (let i = 0; i < semanas.length; i++) {
+                total += semanas[i].topics.length;
+                for (let j = 0; j < semanas[i].topics.length; j++) {
+                    if (localStorage.getItem(`topic-${i}-${j}`) === 'true') completed++;
+                }
+            }
+            
+            const percentual = total > 0 ? Math.round((completed / total) * 100) : 0;
+            const provaDate = new Date('2026-12-06');
+            const hoje = new Date('2026-09-06');
+            const diasRestantes = Math.ceil((provaDate - hoje) / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('totalTopicos').textContent = total;
+            document.getElementById('concluidosCount').textContent = completed;
+            document.getElementById('percentualProgress').textContent = percentual + '%';
+            document.getElementById('diasRestantes').textContent = diasRestantes;
+            document.getElementById('progressFill').style.width = percentual + '%';
+            document.getElementById('progressText').textContent = `${completed}/${total} tópicos concluídos`;
         }
 
-        function switchTab(btn, tabIndex) {
-            const parent = btn.parentElement;
-            parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const contentParent = parent.nextElementSibling;
-            contentParent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            contentParent.querySelectorAll('.tab-content')[tabIndex].classList.add('active');
-        }
-
-        loadData();
-        renderWeekButtons();
-        selectWeek(0);
-        updateStats();
-
-        setInterval(() => {
-            saveData();
-        }, 30000);
+        // Initialize
+        window.addEventListener('load', () => {
+            renderTopics(0);
+            updateStats();
+        });
     </script>
 </body>
 </html>
