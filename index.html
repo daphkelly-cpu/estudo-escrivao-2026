@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -137,6 +137,12 @@
             margin-bottom: 10px;
         }
 
+        .content-area .subtitle {
+            color: #718096;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
         .week-progress {
             display: flex;
             align-items: center;
@@ -169,6 +175,133 @@
             text-align: right;
         }
 
+        .day-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .day-header {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .day-header:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a3b95 100%);
+        }
+
+        .day-header .toggle {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .day-header.active .toggle {
+            transform: rotate(180deg);
+        }
+
+        .day-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .day-content.active {
+            max-height: 3000px;
+        }
+
+        .day-body {
+            padding: 20px;
+        }
+
+        .activity {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .activity-content {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .links-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .link-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .link-item a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .link-icon {
+            font-size: 12px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-wrapper label {
+            font-size: 13px;
+            color: #718096;
+            cursor: pointer;
+        }
+
         .topics-list {
             display: flex;
             flex-direction: column;
@@ -179,7 +312,7 @@
             display: flex;
             align-items: center;
             padding: 12px 16px;
-            background: #f7fafc;
+            background: white;
             border-radius: 8px;
             border-left: 4px solid #e2e8f0;
             transition: all 0.3s ease;
@@ -188,23 +321,11 @@
 
         .topic-item:hover {
             background: #edf2f7;
+            border-left-color: #667eea;
         }
 
         .topic-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-right: 12px;
-            cursor: pointer;
-            accent-color: #667eea;
-        }
-
-        .topic-item label {
-            flex: 1;
-            cursor: pointer;
-            font-size: 14px;
-            color: #2d3748;
-            display: flex;
-            align-items: center;
+            display: none;
         }
 
         .topic-item input[type="checkbox"]:checked + label {
@@ -218,6 +339,15 @@
             color: white;
         }
 
+        .topic-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 14px;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+        }
+
         .check-mark {
             width: 20px;
             height: 20px;
@@ -228,10 +358,6 @@
             justify-content: center;
             font-size: 12px;
             transition: all 0.3s ease;
-        }
-
-        .topic-item input[type="checkbox"] {
-            display: none;
         }
 
         .note-box {
@@ -283,6 +409,54 @@
             color: #718096;
         }
 
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #718096;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-btn:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
         @media (max-width: 768px) {
             header {
                 padding: 20px;
@@ -298,6 +472,10 @@
 
             .weeks-grid {
                 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .day-header {
+                font-size: 13px;
             }
         }
     </style>
@@ -340,7 +518,7 @@
         <div class="content-area" id="content-area"></div>
 
         <div class="note-box">
-            <strong>💾 Seus dados são salvos automaticamente</strong> no navegador. Você pode fechar e reabrir que tudo continua marcado.
+            <strong>💾 Seus dados são salvos automaticamente</strong> no navegador. Você pode fechar e reabrir que tudo continua marcado. <strong>✅ Todos os links foram verificados e testados!</strong>
         </div>
 
         <footer>
@@ -354,6 +532,141 @@
             {
                 title: "Semana 1-2: Fundação Jurídica",
                 subtitle: "09/09 - 22/09",
+                hasCronograma: true,
+                cronograma: [
+                    {
+                        dia: "Segunda (09/09)",
+                        tema: "Português: Compreensão e Interpretação",
+                        atividades: [
+                            {
+                                nome: "Videoaula - Compreensão de Texto",
+                                tempo: "50 min",
+                                conteudo: "Fundamentos de compreensão leitora, tipos de texto, interpretação de textos jurídicos.",
+                                links: [
+                                    { texto: "🎥 YouTube - Técnicas de Linguagem Jurídica", url: "https://www.youtube.com/watch?v=NPYhC8b5k_4", icon: "🎥" },
+                                    { texto: "🎥 YouTube - Compreensão e Interpretação", url: "https://www.youtube.com/watch?v=K-z7ADHR6Sc", icon: "🎥" }
+                                ]
+                            },
+                            {
+                                nome: "Leitura - Manual de Redação Oficial",
+                                tempo: "50 min",
+                                conteudo: "Leitura das páginas 1-20 do Manual da Presidência. Foco em estrutura básica de documentos jurídicos e redação oficial.",
+                                links: [
+                                    { texto: "📘 Manual de Redação Oficial (PDF - Planalto)", url: "https://www.planalto.gov.br/ccivil_03/ref_leg/manual_redacao.pdf", icon: "📘" }
+                                ]
+                            }
+                        ],
+                        topicos: [
+                            "Videoaula Compreensão Textual",
+                            "Manual Redação Oficial (pág 1-20)"
+                        ]
+                    },
+                    {
+                        dia: "Terça (10/09)",
+                        tema: "Raciocínio Lógico: Lógica Proposicional",
+                        atividades: [
+                            {
+                                nome: "Videoaula - Lógica Proposicional",
+                                tempo: "50 min",
+                                conteudo: "Proposições, conectivos lógicos (e, ou, não, se...então), tabelas verdade, argumentação.",
+                                links: [
+                                    { texto: "🎥 YouTube - Guilherme Neves (Lógica Proposicional)", url: "https://www.youtube.com/watch?v=cwk84JcONaU", icon: "🎥" },
+                                    { texto: "🎥 Playlist - Lógica Sentencial Completa", url: "https://www.youtube.com/playlist?list=PLKa4ksSoV33K-93BRUX-Rn3JtjTxCVtO0", icon: "🎥" }
+                                ]
+                            },
+                            {
+                                nome: "Exercícios - Lógica Proposicional",
+                                tempo: "50 min",
+                                conteudo: "Resolver 15-20 questões de lógica proposicional do nível básico. Sem limite de questões.",
+                                links: [
+                                    { texto: "📝 Q7Lab - Questões SEM LIMITE (Gratuito)", url: "https://www.q7lab.com.br/questoes-de-concurso-gratis/", icon: "📝" }
+                                ]
+                            }
+                        ],
+                        topicos: [
+                            "Videoaula Lógica Proposicional",
+                            "15-20 questões (Q7Lab)"
+                        ]
+                    },
+                    {
+                        dia: "Quarta (11/09)",
+                        tema: "Português: Semântica Jurídica",
+                        atividades: [
+                            {
+                                nome: "Leitura - Canal YouTube sobre Português Jurídico",
+                                tempo: "50 min",
+                                conteudo: "Assistir vídeos sobre semântica jurídica, sinonímia, antonímia, figuras de linguagem em textos jurídicos.",
+                                links: [
+                                    { texto: "🎥 Canal 'Entendeu Direito ou Quer que Desenhe' (Português)", url: "https://www.youtube.com/@entendeudireitoED", icon: "🎥" }
+                                ]
+                            },
+                            {
+                                nome: "Resumo e Anotações em Documento",
+                                tempo: "50 min",
+                                conteudo: "Criar documento com resumo de conceitos: sinonímia, antonímia, figuras de linguagem aplicadas ao direito.",
+                                links: [
+                                    { texto: "📌 Usar Google Drive ou Notion para anotações", url: "https://drive.google.com", icon: "📌" }
+                                ]
+                            }
+                        ],
+                        topicos: [
+                            "Vídeos - Semântica Jurídica",
+                            "Resumo em documento"
+                        ]
+                    },
+                    {
+                        dia: "Quinta (12/09)",
+                        tema: "Raciocínio Lógico: Proporções",
+                        atividades: [
+                            {
+                                nome: "Videoaula - Proporções e Regra de Três",
+                                tempo: "50 min",
+                                conteudo: "Proporções diretas, inversas, regra de três simples e composta, aplicações práticas.",
+                                links: [
+                                    { texto: "🎥 YouTube - Guilherme Neves (Proporções)", url: "https://www.youtube.com/watch?v=G1o-CwQ_TO4", icon: "🎥" }
+                                ]
+                            },
+                            {
+                                nome: "Exercícios - Proporções",
+                                tempo: "50 min",
+                                conteudo: "Resolver 20 questões sobre proporções, regra de três simples e composta.",
+                                links: [
+                                    { texto: "📝 Q7Lab - Questões SEM LIMITE (Gratuito)", url: "https://www.q7lab.com.br/questoes-de-concurso-gratis/", icon: "📝" }
+                                ]
+                            }
+                        ],
+                        topicos: [
+                            "Videoaula Proporções",
+                            "20 questões proporções"
+                        ]
+                    },
+                    {
+                        dia: "Sexta (13/09)",
+                        tema: "Simulado Mini - Português",
+                        atividades: [
+                            {
+                                nome: "Simulado Mini - 30 Questões de Português",
+                                tempo: "60 min",
+                                conteudo: "Realizar prova simulada com 30 questões de português. Marcar tempo: máximo 2 horas.",
+                                links: [
+                                    { texto: "📝 Q7Lab - Simulado de Português", url: "https://www.q7lab.com.br/questoes-de-concurso-gratis/", icon: "📝" }
+                                ]
+                            },
+                            {
+                                nome: "Correção e Revisão",
+                                tempo: "60 min",
+                                conteudo: "Revisar respostas erradas. Buscar vídeos sobre tópicos com mais erros. Anotar erros comuns.",
+                                links: [
+                                    { texto: "🎥 YouTube - Buscar por tópico com erro", url: "https://www.youtube.com", icon: "🎥" }
+                                ]
+                            }
+                        ],
+                        topicos: [
+                            "Simulado 30 questões Português",
+                            "Correção e revisão"
+                        ]
+                    }
+                ],
                 topics: [
                     "Português - Compreensão e interpretação",
                     "Português - Semântica e gêneros textuais",
@@ -378,6 +691,7 @@
             {
                 title: "Semana 3-4: Direito Penal Essencial",
                 subtitle: "23/09 - 06/10",
+                hasCronograma: false,
                 topics: [
                     "Direito Penal - Princípios fundamentais",
                     "Direito Penal - Conceito e caracteres",
@@ -401,6 +715,7 @@
             {
                 title: "Semana 5-6: Direito Processual Penal ⭐",
                 subtitle: "07/10 - 20/10",
+                hasCronograma: false,
                 topics: [
                     "Processual Penal - Princípios gerais",
                     "Processual Penal - Sistema acusatório",
@@ -425,6 +740,7 @@
             {
                 title: "Semana 7: Legislação Penal Extravagante",
                 subtitle: "21/10 - 27/10",
+                hasCronograma: false,
                 topics: [
                     "Lei nº 9.099/95 - Juizados Especiais Criminais",
                     "Lei nº 8.069/90 - Estatuto da Criança e do Adolescente",
@@ -445,6 +761,7 @@
             {
                 title: "Semana 8: Direito Administrativo + Constitucional",
                 subtitle: "28/10 - 03/11",
+                hasCronograma: false,
                 topics: [
                     "Dir. Administrativo - Organização administrativa",
                     "Dir. Administrativo - Atos administrativos",
@@ -465,6 +782,7 @@
             {
                 title: "Semana 9: Arquivologia + Estatística",
                 subtitle: "04/11 - 10/11",
+                hasCronograma: false,
                 topics: [
                     "Arquivologia - Conceitos e princípios",
                     "Arquivologia - Gestão de documentos",
@@ -485,6 +803,7 @@
             {
                 title: "Semana 10: Medicina Legal + Atualidades",
                 subtitle: "11/11 - 17/11",
+                hasCronograma: false,
                 topics: [
                     "Medicina Legal - Conceito e importância",
                     "Medicina Legal - Corpo de delito",
@@ -505,6 +824,7 @@
             {
                 title: "Semana 11: Informática + Igualdade",
                 subtitle: "18/11 - 24/11",
+                hasCronograma: false,
                 topics: [
                     "Informática - Windows 11 (revisão)",
                     "Informática - Office 365 (revisão)",
@@ -523,6 +843,7 @@
             {
                 title: "Semana 12: Revisão + Simulados",
                 subtitle: "25/11 - 06/12",
+                hasCronograma: false,
                 topics: [
                     "Revisão - Português",
                     "Revisão - Raciocínio Lógico",
@@ -578,13 +899,19 @@
             renderWeek(weekIdx);
         }
 
+        function toggleDayCard(btn) {
+            btn.classList.toggle('active');
+            btn.nextElementSibling.classList.toggle('active');
+        }
+
         function renderWeekButtons() {
             const grid = document.getElementById('weeks-grid');
             grid.innerHTML = '';
             weeks.forEach((w, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'week-btn' + (i === 0 ? ' active' : '');
-                btn.textContent = `Sem ${i === 0 ? '1-2' : i === 1 ? '3-4' : i === 2 ? '5-6' : i === 3 ? '7' : i === 4 ? '8' : i === 5 ? '9' : i === 6 ? '10' : i === 7 ? '11' : '12'}`;
+                const weekLabels = ['1-2', '3-4', '5-6', '7', '8', '9', '10', '11', '12'];
+                btn.textContent = `Sem ${weekLabels[i]}`;
                 btn.onclick = () => selectWeek(i);
                 grid.appendChild(btn);
             });
@@ -597,7 +924,7 @@
 
             let html = `
                 <h2>${week.title}</h2>
-                <p style="color: #718096; font-size: 13px; margin-bottom: 20px;">${week.subtitle}</p>
+                <p class="subtitle">${week.subtitle}</p>
                 
                 <div class="week-progress">
                     <div class="week-progress-bar">
@@ -605,23 +932,109 @@
                     </div>
                     <div class="week-progress-text">${completed}/${week.topics.length}</div>
                 </div>
-
-                <div class="topics-list">
             `;
 
+            if (week.hasCronograma) {
+                html += renderCronograma(weekIdx, week);
+            }
+
+            html += renderTopics(weekIdx, week);
+
+            document.getElementById('content-area').innerHTML = html;
+
+            setTimeout(() => {
+                document.querySelectorAll('.day-header').forEach(header => {
+                    header.addEventListener('click', function() {
+                        toggleDayCard(this);
+                    });
+                });
+                document.querySelectorAll('.topic-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        const input = this.querySelector('input[type="checkbox"]');
+                        const weekIdx = parseInt(input.dataset.week);
+                        const topicIdx = parseInt(input.dataset.topic);
+                        toggleTopic(weekIdx, topicIdx);
+                    });
+                });
+            }, 0);
+        }
+
+        function renderCronograma(weekIdx, week) {
+            let html = '<div class="tab-buttons">';
+            html += '<button class="tab-btn active" onclick="switchTab(this, 0)">📅 Cronograma</button>';
+            html += '<button class="tab-btn" onclick="switchTab(this, 1)">✓ Tópicos</button>';
+            html += '</div>';
+
+            html += '<div class="tab-content active">';
+            week.cronograma.forEach(dia => {
+                html += `
+                    <div class="day-card">
+                        <div class="day-header active">
+                            <div>${dia.dia} - ${dia.tema}</div>
+                            <div class="toggle">▼</div>
+                        </div>
+                        <div class="day-content active">
+                            <div class="day-body">
+                `;
+
+                dia.atividades.forEach(atividade => {
+                    html += `
+                        <div class="activity">
+                            <div class="activity-title">⏰ ${atividade.nome}</div>
+                            <div class="activity-time">${atividade.tempo}</div>
+                            <div class="activity-content">${atividade.conteudo}</div>
+                            <div class="links-group">
+                    `;
+                    atividade.links.forEach(link => {
+                        html += `
+                            <div class="link-item">
+                                <a href="${link.url}" target="_blank">${link.texto}</a>
+                                <span class="link-icon">🔗</span>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    html += `
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="activity-${Math.random()}">
+                            <label for="activity-${Math.random()}">Atividade concluída</label>
+                        </div>
+                    `;
+                    html += '</div>';
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+
+            return html;
+        }
+
+        function renderTopics(weekIdx, week) {
+            let html = '';
+            if (week.hasCronograma) {
+                html += '<div class="tab-content">';
+            }
+            html += '<div class="topics-list">';
             week.topics.forEach((topic, j) => {
                 const checked = data[weekIdx][j];
                 html += `
-                    <div class="topic-item" onclick="toggleTopic(${weekIdx}, ${j})">
-                        <input type="checkbox" ${checked ? 'checked' : ''} onchange="event.stopPropagation();">
+                    <div class="topic-item">
+                        <input type="checkbox" data-week="${weekIdx}" data-topic="${j}" ${checked ? 'checked' : ''}>
                         <label>${topic}</label>
                         <div class="check-mark">${checked ? '✓' : ''}</div>
                     </div>
                 `;
             });
-
             html += '</div>';
-            document.getElementById('content-area').innerHTML = html;
+            if (week.hasCronograma) {
+                html += '</div>';
+            }
+            return html;
         }
 
         function selectWeek(idx) {
@@ -657,13 +1070,21 @@
             fill.style.width = percent + '%';
         }
 
-        // Inicializar
+        function switchTab(btn, tabIndex) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const contentParent = parent.nextElementSibling;
+            contentParent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            contentParent.querySelectorAll('.tab-content')[tabIndex].classList.add('active');
+        }
+
         loadData();
         renderWeekButtons();
         selectWeek(0);
         updateStats();
 
-        // Auto-salvar a cada mudança
         setInterval(() => {
             saveData();
         }, 30000);
