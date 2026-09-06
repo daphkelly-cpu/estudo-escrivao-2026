@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Escrivão de Polícia Civil (Bahia)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .progress-section {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-header span {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .progress-header .percentage {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-info {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .week-btn {
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .week-btn:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .week-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .content-area {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-area h2 {
+            font-size: 20px;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .week-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .week-progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .week-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .week-progress-text {
+            font-size: 13px;
+            color: #718096;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .topics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .topic-item:hover {
+            background: #edf2f7;
+        }
+
+        .topic-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .topic-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 14px;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+        }
+
+        .topic-item input[type="checkbox"]:checked + label {
+            color: #667eea;
+            font-weight: 500;
+            text-decoration: line-through;
+        }
+
+        .topic-item input[type="checkbox"]:checked ~ .check-mark {
+            background: #667eea;
+            color: white;
+        }
+
+        .check-mark {
+            width: 20px;
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .topic-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .note-box {
+            background: #edf2f7;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .note-box strong {
+            color: #2d3748;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            padding: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: #f7fafc;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 20px;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .weeks-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Escrivão de Polícia Civil - Bahia</h1>
+            <p>Dashboard de Estudo | Concurso 2026 | Prova: 06/12/2026</p>
+        </header>
+
+        <div class="progress-section">
+            <div class="progress-header">
+                <span>Progresso Geral</span>
+                <span class="percentage" id="overall-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="overall-progress"></div>
+            </div>
+            <div class="progress-info" id="progress-info">0 de 144 tópicos concluídos</div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="number" id="completed-stat">0</div>
+                    <div class="label">Concluídos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="remaining-stat">144</div>
+                    <div class="label">Restantes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="weeks-completed">0/9</div>
+                    <div class="label">Semanas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="weeks-grid" id="weeks-grid"></div>
+
+        <div class="content-area" id="content-area"></div>
+
+        <div class="note-box">
+            <strong>💾 Seus dados são salvos automaticamente</strong> no navegador. Você pode fechar e reabrir que tudo continua marcado.
+        </div>
+
+        <footer>
+            <p>Dashboard criado para acompanhar seu progresso no estudo para Escrivão de Polícia Civil (Bahia)</p>
+            <p style="margin-top: 10px; opacity: 0.7;">Atualizado em: <span id="last-update">Agora</span></p>
+        </footer>
+    </div>
+
+    <script>
+        const weeks = [
+            {
+                title: "Semana 1-2: Fundação Jurídica",
+                subtitle: "09/09 - 22/09",
+                topics: [
+                    "Português - Compreensão e interpretação",
+                    "Português - Semântica e gêneros textuais",
+                    "Português - Morfologia e estrutura",
+                    "Português - Sintaxe e concordância",
+                    "Português - Redação Oficial",
+                    "Português - Elementos de coesão",
+                    "Raciocínio Lógico - Conjuntos numéricos",
+                    "Raciocínio Lógico - Proporções e regra de três",
+                    "Raciocínio Lógico - Lógica proposicional",
+                    "Raciocínio Lógico - Diagramas lógicos",
+                    "Raciocínio Lógico - Problemas aritméticos",
+                    "Raciocínio Lógico - Sequências e progressões",
+                    "Atualidades - Segurança pública e legislação",
+                    "Informática - Windows 11",
+                    "Informática - Office 365",
+                    "Informática - Internet e segurança",
+                    "Legislação Geral - Lei nº 11.370/09",
+                    "Legislação Geral - Lei nº 6.677/94"
+                ]
+            },
+            {
+                title: "Semana 3-4: Direito Penal Essencial",
+                subtitle: "23/09 - 06/10",
+                topics: [
+                    "Direito Penal - Princípios fundamentais",
+                    "Direito Penal - Conceito e caracteres",
+                    "Direito Penal - Aplicação da lei no tempo",
+                    "Direito Penal - Aplicação da lei no espaço",
+                    "Direito Penal - Teorias da conduta",
+                    "Direito Penal - Fato típico",
+                    "Direito Penal - Resultado e nexo causal",
+                    "Direito Penal - Tipicidade e atipicidade",
+                    "Direito Penal - Ilicitude e causas de exclusão",
+                    "Direito Penal - Culpabilidade",
+                    "Direito Penal - Tipos de crime",
+                    "Direito Penal - Crimes contra pessoa",
+                    "Direito Penal - Crimes contra patrimônio",
+                    "Direito Penal - Crimes contra dignidade sexual",
+                    "Direito Penal - Crimes contra administração pública",
+                    "Direito Penal - Pena e sua aplicação",
+                    "Direito Penal - Medidas de segurança"
+                ]
+            },
+            {
+                title: "Semana 5-6: Direito Processual Penal ⭐",
+                subtitle: "07/10 - 20/10",
+                topics: [
+                    "Processual Penal - Princípios gerais",
+                    "Processual Penal - Sistema acusatório",
+                    "Processual Penal - Inquérito policial - Conceito",
+                    "Processual Penal - Inquérito - Instauração",
+                    "Processual Penal - Inquérito - Procedimento",
+                    "Processual Penal - Inquérito - Arquivamento",
+                    "Processual Penal - Provas - Conceito e classificação",
+                    "Processual Penal - Sistemas de prova",
+                    "Processual Penal - Testemunhas",
+                    "Processual Penal - Perícia e peritos",
+                    "Processual Penal - Busca e apreensão",
+                    "Processual Penal - Prisão em flagrante",
+                    "Processual Penal - Prisão preventiva",
+                    "Processual Penal - Medidas cautelares",
+                    "Processual Penal - Competência",
+                    "Processual Penal - Sujeitos do processo",
+                    "Processual Penal - Procedimento comum",
+                    "Processual Penal - Nulidades processuais"
+                ]
+            },
+            {
+                title: "Semana 7: Legislação Penal Extravagante",
+                subtitle: "21/10 - 27/10",
+                topics: [
+                    "Lei nº 9.099/95 - Juizados Especiais Criminais",
+                    "Lei nº 8.069/90 - Estatuto da Criança e do Adolescente",
+                    "Lei nº 11.340/06 - Lei Maria da Penha",
+                    "Lei nº 10.826/03 - Estatuto do Desarmamento",
+                    "Lei nº 11.343/06 - Lei de Drogas",
+                    "Lei nº 12.850/13 - Organizações Criminosas",
+                    "Lei nº 8.072/90 - Crimes Hediondos",
+                    "Lei nº 7.716/89 - Crimes de Preconceito",
+                    "Lei nº 13.869/19 - Abuso de Autoridade",
+                    "Lei nº 9.455/97 - Tortura",
+                    "Lei nº 9.503/97 - Código de Trânsito",
+                    "Lei nº 8.137/90 - Crimes tributários",
+                    "Lei nº 9.605/98 - Crimes ambientais",
+                    "Lei nº 7.960/89 - Prisão temporária"
+                ]
+            },
+            {
+                title: "Semana 8: Direito Administrativo + Constitucional",
+                subtitle: "28/10 - 03/11",
+                topics: [
+                    "Dir. Administrativo - Organização administrativa",
+                    "Dir. Administrativo - Atos administrativos",
+                    "Dir. Administrativo - Requisitos e elementos",
+                    "Dir. Administrativo - Classificação de atos",
+                    "Dir. Administrativo - Poder hierárquico",
+                    "Dir. Administrativo - Poder disciplinar",
+                    "Dir. Administrativo - Poder regulamentar",
+                    "Dir. Administrativo - Responsabilidade civil",
+                    "Dir. Administrativo - Regime jurídico-administrativo",
+                    "Dir. Constitucional - Direitos e garantias fundamentais",
+                    "Dir. Constitucional - Segurança pública",
+                    "Dir. Constitucional - Organização dos poderes",
+                    "Dir. Constitucional - Garantias constitucionais",
+                    "Dir. Constitucional - Arts. 1º, 3º, 4º, 5º CF/88"
+                ]
+            },
+            {
+                title: "Semana 9: Arquivologia + Estatística",
+                subtitle: "04/11 - 10/11",
+                topics: [
+                    "Arquivologia - Conceitos e princípios",
+                    "Arquivologia - Gestão de documentos",
+                    "Arquivologia - Protocolo - Recebimento",
+                    "Arquivologia - Protocolo - Registro",
+                    "Arquivologia - Protocolo - Distribuição",
+                    "Arquivologia - Classificação de arquivos",
+                    "Arquivologia - Ordenação de documentos",
+                    "Arquivologia - Tabela de temporalidade",
+                    "Arquivologia - Acondicionamento",
+                    "Arquivologia - Preservação e conservação",
+                    "Arquivologia - Tipologias documentais",
+                    "Estatística - Estatística descritiva",
+                    "Estatística - Gráficos e tabelas",
+                    "Estatística - Probabilidade básica"
+                ]
+            },
+            {
+                title: "Semana 10: Medicina Legal + Atualidades",
+                subtitle: "11/11 - 17/11",
+                topics: [
+                    "Medicina Legal - Conceito e importância",
+                    "Medicina Legal - Corpo de delito",
+                    "Medicina Legal - Perícia e peritos",
+                    "Medicina Legal - Identidade e identificação",
+                    "Medicina Legal - Lesões corporais",
+                    "Medicina Legal - Fenômenos cadavéricos",
+                    "Medicina Legal - Morte súbita",
+                    "Medicina Legal - Exame de local de crime",
+                    "Medicina Legal - Crimes contra dignidade sexual",
+                    "Medicina Legal - Asfixias",
+                    "Medicina Legal - Violência doméstica",
+                    "Atualidades - Segurança pública",
+                    "Atualidades - Tecnologia e justiça",
+                    "Atualidades - Legislação recente"
+                ]
+            },
+            {
+                title: "Semana 11: Informática + Igualdade",
+                subtitle: "18/11 - 24/11",
+                topics: [
+                    "Informática - Windows 11 (revisão)",
+                    "Informática - Office 365 (revisão)",
+                    "Informática - Internet (revisão)",
+                    "Informática - Segurança da informação",
+                    "Informática - Backup e sincronização",
+                    "Igualdade Racial - Constituição Federal",
+                    "Igualdade Racial - Lei nº 12.288/10",
+                    "Igualdade Racial - Lei nº 7.716/89",
+                    "Igualdade Racial - Lei Maria da Penha (revisão)",
+                    "Igualdade Racial - Lei nº 13.182/14 (Bahia)",
+                    "Igualdade Racial - Jurisprudência aplicada",
+                    "Igualdade Racial - Conceitos principais"
+                ]
+            },
+            {
+                title: "Semana 12: Revisão + Simulados",
+                subtitle: "25/11 - 06/12",
+                topics: [
+                    "Revisão - Português",
+                    "Revisão - Raciocínio Lógico",
+                    "Revisão - Direito Penal",
+                    "Revisão - Processual Penal",
+                    "Revisão - Legislação Penal Extravagante",
+                    "Revisão - Direito Administrativo",
+                    "Revisão - Direito Constitucional",
+                    "Revisão - Arquivologia",
+                    "Revisão - Medicina Legal",
+                    "Revisão - Igualdade Racial",
+                    "Revisão - Informática",
+                    "Simulado 1 - 100 questões",
+                    "Simulado 2 - 100 questões"
+                ]
+            }
+        ];
+
+        let currentWeek = 0;
+        let data = {};
+
+        function loadData() {
+            const saved = localStorage.getItem('estudoEscrivaoData');
+            if (saved) {
+                try {
+                    data = JSON.parse(saved);
+                } catch {
+                    initData();
+                }
+            } else {
+                initData();
+            }
+        }
+
+        function initData() {
+            weeks.forEach((w, i) => {
+                data[i] = {};
+                w.topics.forEach((t, j) => {
+                    data[i][j] = false;
+                });
+            });
+        }
+
+        function saveData() {
+            localStorage.setItem('estudoEscrivaoData', JSON.stringify(data));
+            updateStats();
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString('pt-BR');
+        }
+
+        function toggleTopic(weekIdx, topicIdx) {
+            data[weekIdx][topicIdx] = !data[weekIdx][topicIdx];
+            saveData();
+            renderWeek(weekIdx);
+        }
+
+        function renderWeekButtons() {
+            const grid = document.getElementById('weeks-grid');
+            grid.innerHTML = '';
+            weeks.forEach((w, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'week-btn' + (i === 0 ? ' active' : '');
+                btn.textContent = `Sem ${i === 0 ? '1-2' : i === 1 ? '3-4' : i === 2 ? '5-6' : i === 3 ? '7' : i === 4 ? '8' : i === 5 ? '9' : i === 6 ? '10' : i === 7 ? '11' : '12'}`;
+                btn.onclick = () => selectWeek(i);
+                grid.appendChild(btn);
+            });
+        }
+
+        function renderWeek(weekIdx) {
+            const week = weeks[weekIdx];
+            const completed = week.topics.filter((_, j) => data[weekIdx][j]).length;
+            const percent = Math.round((completed / week.topics.length) * 100);
+
+            let html = `
+                <h2>${week.title}</h2>
+                <p style="color: #718096; font-size: 13px; margin-bottom: 20px;">${week.subtitle}</p>
+                
+                <div class="week-progress">
+                    <div class="week-progress-bar">
+                        <div class="week-progress-fill" style="width: ${percent}%;"></div>
+                    </div>
+                    <div class="week-progress-text">${completed}/${week.topics.length}</div>
+                </div>
+
+                <div class="topics-list">
+            `;
+
+            week.topics.forEach((topic, j) => {
+                const checked = data[weekIdx][j];
+                html += `
+                    <div class="topic-item" onclick="toggleTopic(${weekIdx}, ${j})">
+                        <input type="checkbox" ${checked ? 'checked' : ''} onchange="event.stopPropagation();">
+                        <label>${topic}</label>
+                        <div class="check-mark">${checked ? '✓' : ''}</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            document.getElementById('content-area').innerHTML = html;
+        }
+
+        function selectWeek(idx) {
+            currentWeek = idx;
+            document.querySelectorAll('.week-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === idx);
+            });
+            renderWeek(idx);
+        }
+
+        function updateStats() {
+            let total = 0, completed = 0, weeksCompleted = 0;
+            weeks.forEach((w, i) => {
+                let weekDone = 0;
+                w.topics.forEach((_, j) => {
+                    total++;
+                    if (data[i][j]) {
+                        completed++;
+                        weekDone++;
+                    }
+                });
+                if (weekDone === w.topics.length) weeksCompleted++;
+            });
+
+            const percent = Math.round((completed / total) * 100);
+            document.getElementById('overall-percent').textContent = percent + '%';
+            document.getElementById('completed-stat').textContent = completed;
+            document.getElementById('remaining-stat').textContent = total - completed;
+            document.getElementById('weeks-completed').textContent = weeksCompleted + '/' + weeks.length;
+            document.getElementById('progress-info').textContent = `${completed} de ${total} tópicos concluídos`;
+
+            const fill = document.getElementById('overall-progress');
+            fill.style.width = percent + '%';
+        }
+
+        // Inicializar
+        loadData();
+        renderWeekButtons();
+        selectWeek(0);
+        updateStats();
+
+        // Auto-salvar a cada mudança
+        setInterval(() => {
+            saveData();
+        }, 30000);
+    </script>
+</body>
+</html>
